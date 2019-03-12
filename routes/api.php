@@ -29,6 +29,9 @@ Route::get('/listings','JobListingsController@listAllJobs');
 Route::get('/listings/{id}','JobListingsController@listSingleJob');
 Route::post('/listings','JobListingsController@store');
 Route::put('/listings/update/{id}','JobListingsController@update');
-Route::delete('/listings/delete/{id}','JobListingsController@destroy');
+Route::delete('/listings/delete/{id}','JobListingsController@softDelete');
+Route::put('listings/close/{id}','JobListingsController@close');
+
+
 
 

@@ -20,7 +20,9 @@ class JobListingsController extends Controller
 
     public function listAllJobs() {
 
-        $jobListing = JobListing::where('delete',0)->latest()->get();
+        $jobListing = JobListing::where('delete', 0)
+           ->where('close', 0)
+           ->latest()->get();
         return response()->json($jobListing,200);
 
     }
@@ -29,7 +31,7 @@ class JobListingsController extends Controller
        
         $listing = $id;
         
-        if($id->delete == 1) {
+        if($listing->delete == 1 || $id->close == 1 ) {
             return response()->json("resource has been deleted or is no longer in use", 410);  
         }
        
@@ -64,7 +66,7 @@ class JobListingsController extends Controller
         $request->all();
         $jobListing = JobListing::create($request->all());
        
-        return response()->json($jobListing, 201);
+        return response()->json($jobListing, 200);
     }
 
     /**
@@ -117,11 +119,21 @@ class JobListingsController extends Controller
      * @param  \App\JobListings  $jobListings
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JobListing $id)
+    public function softDelete(JobListing $id)
     {
         $jobListing = $id;
-        $jobListing->update(['delete' => 1]);
-        return response()->json( 'resource marked for deletion', 202);
+        $jobListing->delete = 1;
+        $jobListing->save();
+        return response()->json( 'resource marked for deletion', 200);
+        
+    }
+
+    public function close(JobListing $id)
+    {
+        $jobListing = $id;
+        $jobListing->close = 1;
+        $jobListing->save();
+        return response()->json( $jobListing, 200);
         
     }
 }

@@ -21,7 +21,7 @@ class CreateJobListingsTable extends Migration
             $table->string('position');
             $table->string('requirements');
             $table->string('location');
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('close')->default(0);
             $table->tinyInteger('delete')->default(0);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');

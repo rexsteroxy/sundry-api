@@ -30,9 +30,8 @@ class JobListingStoreRequest extends FormRequest
             'position' =>'required|min:3',
             'requirements' =>'required|min:10',
             'location' =>'required|min:2',
-            'status' => 'sometimes|integer',
-            'user_id' => 'required|exists:users,id',
-            'delete' => 'sometimes|integer'
+            'user_id' => 'required|exists:users,id'
+        
         ];
     }
 
